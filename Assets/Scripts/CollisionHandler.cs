@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -23,12 +24,34 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("You have finished the level!");
-                 audioSource.PlayOneShot(finishLevel);
+                NextLevel();
+                audioSource.PlayOneShot(finishLevel);
                 break;
             default:
-                audioSource.PlayOneShot(crash);
+                ReloadLevel();
                 Debug.Log("You have crashed!");
                 break;
         }
+    }
+
+    private static void NextLevel()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+        
+        if (nextScene == SceneManager.sceneCountInBuildSettings )
+        {
+            nextScene = 0;
+        }
+        
+        SceneManager.LoadScene(nextScene);
+    }
+
+    private void ReloadLevel()
+    {
+        audioSource.PlayOneShot(crash);
+        
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }
