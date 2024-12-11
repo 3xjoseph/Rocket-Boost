@@ -17,6 +17,9 @@ public class Movement : MonoBehaviour
     [Tooltip("Adjust the strength of the rocket thrust")][SerializeField] float thrustStrength = 1000f;
     [Tooltip("Adjust the strength of the rocket rotation")][SerializeField] float rotationStrength = 1000f;
 
+    [Header("Audio Settings")]
+    [Tooltip("Rrocket thrust audio clip")][SerializeField] AudioClip rocketTHrust;
+
 
     void OnEnable() 
     {
@@ -65,7 +68,7 @@ public class Movement : MonoBehaviour
 
             if (!audioSource.isPlaying)
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(rocketTHrust);
             }
         }
         else
