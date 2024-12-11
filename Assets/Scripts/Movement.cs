@@ -5,12 +5,18 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] InputAction thrust;
-    [SerializeField] InputAction rotation;
-    [SerializeField] float thrustStrength = 1000f;
-    [SerializeField] float rotationStrength = 1000f;
-
+    AudioSource audioSource;
     Rigidbody rb;
+
+
+    [Header("Movement Reference Settings")]
+    [Tooltip("Set the input action for the rocket thrust")][SerializeField] InputAction thrust;
+    [Tooltip("Set the input action for the rocket rotation")][SerializeField] InputAction rotation;
+    
+    [Header("Movement Strength Settings")]
+    [Tooltip("Adjust the strength of the rocket thrust")][SerializeField] float thrustStrength = 1000f;
+    [Tooltip("Adjust the strength of the rocket rotation")][SerializeField] float rotationStrength = 1000f;
+
 
     void OnEnable() 
     {
@@ -21,6 +27,7 @@ public class Movement : MonoBehaviour
     void Start() 
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
     void FixedUpdate()
     {
@@ -55,6 +62,15 @@ public class Movement : MonoBehaviour
         if (thrust.IsPressed())
         {
             rb.AddRelativeForce((Vector3.up * thrustStrength) * Time.fixedDeltaTime);
+
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
         }
     }
 }
