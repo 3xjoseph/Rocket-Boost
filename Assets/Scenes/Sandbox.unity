@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 05deb198430b0c0438fc6c3e3963fefa, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -318,7 +318,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -361,7 +361,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 19525
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -923,30 +923,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1085504201495058876, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: Loop
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1085504201495058876, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1085504201495058876, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3432384713783229511, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: crash
-      value: 
-      objectReference: {fileID: 8300000, guid: e871167ed50c45444a6d0754f5c8d31a, type: 3}
-    - target: {fileID: 3432384713783229511, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: success
-      value: 
-      objectReference: {fileID: 8300000, guid: 593817a9f6a838441946003965403165, type: 3}
-    - target: {fileID: 3432384713783229511, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: finishLevel
-      value: 
-      objectReference: {fileID: 8300000, guid: 593817a9f6a838441946003965403165, type: 3}
     - target: {fileID: 3962810448166123515, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.329
@@ -991,10 +967,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Rocket
       objectReference: {fileID: 0}
-    - target: {fileID: 7891543156321029508, guid: 24a561c90ce746048a897836f69ecac6, type: 3}
-      propertyPath: rocketTHrust
-      value: 
-      objectReference: {fileID: 8300000, guid: 541a5a95906543f4899cfc8427243ecc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1054,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7888451961241515418, guid: ef1030f6d3d34ea4a80e35362b4c51de, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
