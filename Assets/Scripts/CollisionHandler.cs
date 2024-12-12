@@ -7,6 +7,8 @@ public class CollisionHandler : MonoBehaviour
     AudioSource audioSource;
     Movement movement;
 
+    bool isControllable = true;
+
     [Header("Audio Reference Settings")]
     [SerializeField] AudioClip crash;
     [SerializeField] AudioClip success;
@@ -21,6 +23,8 @@ public class CollisionHandler : MonoBehaviour
     }
     void OnCollisionEnter(Collision other) 
     {
+        if (!isControllable) { return; }
+
         switch (other.gameObject.tag)
         {
             case "Start":
@@ -30,35 +34,29 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("You have grabbed fuel!");
                 break;
             case "Finish":
-                Debug.Log("You have finished the level!");
                 StartNextLevelSequence();
                 break;
             default:
                 StartCrashSequence();
-                Debug.Log("You have crashed!");
                 break;
         }
     }
 
     void StartCrashSequence()
     {
+        isControllable = false;
+        audioSource.Stop();
         audioSource.PlayOneShot(crash);
-
-        DisableMovement();
-
+        GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", delay);
-    }
-
-    void DisableMovement()
-    {
-        movement.thrust.Disable();
-        movement.rotation.Disable();
     }
 
     void StartNextLevelSequence()
     {
+        isControllable = false;
+        audioSource.Stop();
         audioSource.PlayOneShot(success);
-        DisableMovement();
+        GetComponent<Movement>().enabled = false;
         Invoke("NextLevel", delay);
     }
 
@@ -75,7 +73,7 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(nextScene);
     }
 
-    private void ReloadLevel()
+    void ReloadLevel()
     {
         
         int currentScene = SceneManager.GetActiveScene().buildIndex;
