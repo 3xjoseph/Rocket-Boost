@@ -10,8 +10,8 @@ public class Movement : MonoBehaviour
 
 
     [Header("Movement Reference Settings")]
-    [Tooltip("Set the input action for the rocket thrust")][SerializeField] InputAction thrust;
-    [Tooltip("Set the input action for the rocket rotation")][SerializeField] InputAction rotation;
+    [Tooltip("Set the input action for the rocket thrust")][SerializeField] public InputAction thrust;
+    [Tooltip("Set the input action for the rocket rotation")][SerializeField] public InputAction rotation;
     
     [Header("Movement Strength Settings")]
     [Tooltip("Adjust the strength of the rocket thrust")][SerializeField] float thrustStrength = 1000f;

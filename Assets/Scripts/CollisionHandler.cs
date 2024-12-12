@@ -1,16 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
     AudioSource audioSource;
+    Movement movement;
 
+    [Header("Audio Reference Settings")]
     [SerializeField] AudioClip crash;
-    [SerializeField] AudioClip finishLevel;
+    [SerializeField] AudioClip success;
+
+    [Header("Delay Settings")]
+    [SerializeField] float delay = 2f;
 
     void Start() 
     {
         audioSource = GetComponent<AudioSource>();
+        movement = GetComponent<Movement>();
     }
     void OnCollisionEnter(Collision other) 
     {
@@ -24,17 +31,38 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("You have finished the level!");
-                NextLevel();
-                audioSource.PlayOneShot(finishLevel);
+                StartNextLevelSequence();
                 break;
             default:
-                ReloadLevel();
+                StartCrashSequence();
                 Debug.Log("You have crashed!");
                 break;
         }
     }
 
-    private static void NextLevel()
+    void StartCrashSequence()
+    {
+        audioSource.PlayOneShot(crash);
+
+        DisableMovement();
+
+        Invoke("ReloadLevel", delay);
+    }
+
+    void DisableMovement()
+    {
+        movement.thrust.Disable();
+        movement.rotation.Disable();
+    }
+
+    void StartNextLevelSequence()
+    {
+        audioSource.PlayOneShot(success);
+        DisableMovement();
+        Invoke("NextLevel", delay);
+    }
+
+    void NextLevel()
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         int nextScene = currentScene + 1;
@@ -49,7 +77,6 @@ public class CollisionHandler : MonoBehaviour
 
     private void ReloadLevel()
     {
-        audioSource.PlayOneShot(crash);
         
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentScene);
