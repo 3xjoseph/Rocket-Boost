@@ -37,6 +37,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
+    
     void FixedUpdate()
     {
         ProcessThrust();
@@ -49,27 +50,27 @@ public class Movement : MonoBehaviour
         float rotationInput = rotation.ReadValue<float>();
         if (rotationInput < 0)
         {
-            ApplyRotation(rotationStrength);
-            if(!rightBooster.isPlaying)
-            {
-                leftBooster.Stop();
-                rightBooster.Play();
-            }
+            RotateRocket(rotationStrength, rightBooster, leftBooster);
         }
         else if (rotationInput > 0)
         {
-            ApplyRotation(-rotationStrength);
-            if(!leftBooster.isPlaying)
-            {
-                rightBooster.Stop();
-                leftBooster.Play();
-            }
+            RotateRocket(-rotationStrength, leftBooster, rightBooster);
         } 
         else
         {
             rightBooster.Stop();
             leftBooster.Stop();
         }       
+    }
+
+    void RotateRocket(float rotationStrengthParameter, ParticleSystem firstBooster, ParticleSystem secondBooster)
+    {
+        ApplyRotation(rotationStrengthParameter);
+        if (!firstBooster.isPlaying)
+        {
+            secondBooster.Stop();
+            firstBooster.Play();
+        }
     }
 
     void ApplyRotation(float rotationStrengthParameter)
@@ -79,27 +80,37 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = false;
     }
 
-    private void ProcessThrust()
+    void ProcessThrust()
     {
         if (thrust.IsPressed())
         {
-            rb.AddRelativeForce((Vector3.up * thrustStrength) * Time.fixedDeltaTime);
-            mainBooster.Play();
-
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(rocketThrust);
-            }
-
-            if(!mainBooster.isPlaying)
-            {
-                mainBooster.Play();
-            }
+            ThrustRocket();
         }
         else
         {
-            audioSource.Stop();
-            mainBooster.Stop();
+            StopThrust();
         }
+    }
+
+    void ThrustRocket()
+    {
+        rb.AddRelativeForce((Vector3.up * thrustStrength) * Time.fixedDeltaTime);
+        mainBooster.Play();
+
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(rocketThrust);
+        }
+
+        if (!mainBooster.isPlaying)
+        {
+            mainBooster.Play();
+        }
+    }
+
+    void StopThrust()
+    {
+        audioSource.Stop();
+        mainBooster.Stop();
     }
 }
