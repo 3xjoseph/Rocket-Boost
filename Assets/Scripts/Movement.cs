@@ -20,6 +20,11 @@ public class Movement : MonoBehaviour
     [Header("Audio Settings")]
     [Tooltip("Rrocket thrust audio clip")][SerializeField] AudioClip rocketThrust;
 
+    [Header("Rocket Booster Particle Reference Settings")]
+    [SerializeField] ParticleSystem mainBooster;
+    [SerializeField] ParticleSystem leftBooster;
+    [SerializeField] ParticleSystem rightBooster;
+
 
     void OnEnable() 
     {
@@ -45,12 +50,26 @@ public class Movement : MonoBehaviour
         if (rotationInput < 0)
         {
             ApplyRotation(rotationStrength);
+            if(!rightBooster.isPlaying)
+            {
+                leftBooster.Stop();
+                rightBooster.Play();
+            }
         }
         else if (rotationInput > 0)
         {
             ApplyRotation(-rotationStrength);
-        }   
-           
+            if(!leftBooster.isPlaying)
+            {
+                rightBooster.Stop();
+                leftBooster.Play();
+            }
+        } 
+        else
+        {
+            rightBooster.Stop();
+            leftBooster.Stop();
+        }       
     }
 
     void ApplyRotation(float rotationStrengthParameter)
@@ -65,15 +84,22 @@ public class Movement : MonoBehaviour
         if (thrust.IsPressed())
         {
             rb.AddRelativeForce((Vector3.up * thrustStrength) * Time.fixedDeltaTime);
+            mainBooster.Play();
 
             if (!audioSource.isPlaying)
             {
                 audioSource.PlayOneShot(rocketThrust);
             }
+
+            if(!mainBooster.isPlaying)
+            {
+                mainBooster.Play();
+            }
         }
         else
         {
             audioSource.Stop();
+            mainBooster.Stop();
         }
     }
 }
